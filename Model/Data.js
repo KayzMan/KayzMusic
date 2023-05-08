@@ -1,0 +1,32 @@
+export default songs = [
+  {
+    id: 1,
+    url: require('../assets/song1.mp4'),
+    title: 'Riripo Tsime',
+    artist: 'AFM',
+    artwork: require('../assets/girl.jpg'),
+    album: 'Hymns',
+    genre: 'Gospel',
+    duration: 105,
+  },
+  {
+    id: 2,
+    url: require('../assets/are_you_listening.mp3'),
+    title: 'Are You Listening',
+    artist: 'Chelsea Cutler',
+    artwork: require('../assets/girl.jpg'),
+    album: 'Forever',
+    genre: 'Eletric',
+    duration: 173,
+  },
+  {
+    id: 3,
+    url: require('../assets/chelsea_cutler.webm'),
+    title: 'The one missing you',
+    artist: 'Chelsea Cutler',
+    artwork: require('../assets/girl.jpg'),
+    album: 'Forever',
+    genre: 'Folk',
+    duration: 244,
+  },
+];
