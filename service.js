@@ -18,7 +18,7 @@ DeviceEventEmitter.addListener('onBatchReceived', async params => {
       id: item.id,
       url: `${item.path}`,
       title: item.fileName ? item.fileName : 'Audio File',
-      artist: item.artist ? item.artist : 'Unknown Artist',
+      artist: item.author ? item.author : 'Unknown Artist',
       artwork: item.cover ? item.cover : require('./assets/girl.jpg'),
       album: item.album ? item.album : 'Unknown Albumn',
       genre: item.genre ? item.genre : 'Unknown Genre',

@@ -16,6 +16,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
 import MaterialCommIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import TrackPlayer, {
   RepeatMode,
   State,
@@ -58,7 +59,7 @@ export default function PlayerArea({
 
   const animate = () => {
     Animated.spring(scale, {
-      toValue: playbackState ? 2 : 1,
+      toValue: playbackState ? 0.9 : 1,
       useNativeDriver: true,
     }).start();
   };
@@ -133,6 +134,8 @@ export default function PlayerArea({
 
   // 👇 handler for play/pause button
   const handlePlayPausePress = async () => {
+    animate();
+
     if ((await TrackPlayer.getState()) === State.Playing) {
       TrackPlayer.pause();
       setIsPlaying(false);
@@ -187,6 +190,16 @@ export default function PlayerArea({
   TrackPlayer.addEventListener(Event.RemotePause, () => {
     setIsPlaying(false);
   });
+
+  // 👇️ handler to rewind by 10 secs
+  const rewind = async () => {
+    await TrackPlayer.seekTo(position - 10);
+  };
+
+  // 👇️ handler to fast-forward by 30 secs
+  const fastForward = async () => {
+    await TrackPlayer.seekTo(position + 30);
+  };
 
   // 👇 styles
   const styles = StyleSheet.create({
@@ -286,11 +299,12 @@ export default function PlayerArea({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: 10,
+      marginBottom: 0,
       marginHorizontal: 10,
     },
     sliderContainer: {
       marginVertical: 30,
+      marginBottom: 10,
     },
     progressContainer: {
       flexDirection: 'row',
@@ -316,6 +330,14 @@ export default function PlayerArea({
     },
     icon: {
       color: isDarkMode ? COLORS.white_eee : COLORS.white_ccc,
+    },
+    rewind_fastForwardContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+      marginTop: 0,
+      marginHorizontal: 20,
+      marginBottom: 20,
     },
   });
 
@@ -403,14 +425,14 @@ export default function PlayerArea({
                     uri: trackArtWork?.uri ? trackArtWork.uri : trackArtWork,
                   }}
                   style={styles.songArtwork}
-                  resizeMode="cover"
+                  resizeMode="stretch"
                   resizeMethod="resize"
                 />
               ) : (
                 <Image
                   source={require('../assets/girl.jpg')}
                   style={styles.songArtwork}
-                  resizeMode="cover"
+                  resizeMode="stretch"
                   resizeMethod="resize"
                 />
               )}
@@ -503,6 +525,22 @@ export default function PlayerArea({
                   </Text>
                 )}
               </View>
+            </View>
+
+            {/* rewind and fast forward section */}
+            <View style={styles.rewind_fastForwardContainer}>
+              <MaterialIcon
+                name="replay-10"
+                size={35}
+                color={COLORS.white_eee}
+                onPress={rewind}
+              />
+              <MaterialIcon
+                name="forward-30"
+                size={35}
+                color={COLORS.white_eee}
+                onPress={fastForward}
+              />
             </View>
 
             {/* The control buttons section */}
